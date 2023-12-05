@@ -1,5 +1,6 @@
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <libtmpl/include/tmpl_bool.h>
 #include <libtmpl/include/tmpl_string.h>
 #include <libtmpl/include/tmpl_complex.h>
@@ -20,7 +21,6 @@ void rssringoccs_Reconstruction(rssringoccs_TAUObj *tau)
 
     rssringoccs_Tau_Check_Keywords(tau);
     rssringoccs_Tau_Check_Occ_Type(tau);
-    rssringoccs_Tau_Compute_Vars(tau);
     rssringoccs_Tau_Get_Window_Width(tau);
     rssringoccs_Tau_Check_Data_Range(tau);
 
@@ -34,7 +34,7 @@ void rssringoccs_Reconstruction(rssringoccs_TAUObj *tau)
         rssringoccs_Diffraction_Correction_Fresnel(tau);
     else if (tau->psinum == rssringoccs_DR_Legendre)
         rssringoccs_Diffraction_Correction_Legendre(tau);
-    else if (tau->psinum == rssringoccs_DR_SimpleFFT)
+    else if (tau->psinum == rssringoccs_DR_NewtonSimpleFFT)
         rssringoccs_Diffraction_Correction_SimpleFFT(tau);
     else
         rssringoccs_Diffraction_Correction_Newton(tau);
@@ -82,7 +82,7 @@ void rssringoccs_Reconstruction(rssringoccs_TAUObj *tau)
                 rssringoccs_Diffraction_Correction_Fresnel(tau);
             else if (tau->psinum == rssringoccs_DR_Legendre)
                 rssringoccs_Diffraction_Correction_Legendre(tau);
-            else if (tau->psinum == rssringoccs_DR_SimpleFFT)
+            else if (tau->psinum == rssringoccs_DR_NewtonSimpleFFT)
                 rssringoccs_Diffraction_Correction_SimpleFFT(tau);
             else
                 rssringoccs_Diffraction_Correction_Newton(tau);

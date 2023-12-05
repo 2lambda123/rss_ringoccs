@@ -23,23 +23,37 @@
 #include <stdlib.h>
 #include <rss_ringoccs/include/rss_ringoccs_reconstruction.h>
 
-void rssringoccs_Destroy_Tau(rssringoccs_TAUObj **tau)
-{
-    rssringoccs_TAUObj *tau_inst = *tau;
+/*  Macro for freeing and nullifying the members of the geo CSV structs.      */
+#define DESTROY_TAU_VAR(var) if (var != NULL){free(var); var = NULL;}
 
-    if (tau_inst == NULL)
+/*  Function for freeing all member of a tau object except the error message. */
+void rssringoccs_Tau_Destroy_Members(rssringoccs_TAUObj *tau)
+{
+    /*  If the input pointer is NULL, do not try to access it. Just return.   */
+    if (tau == NULL)
         return;
 
-    rssringoccs_Destroy_Tau_Members(tau_inst);
-
-    if (tau_inst->error_message != NULL)
-    {
-        free(tau_inst->error_message);
-        tau_inst->error_message = NULL;
-    }
-
-    free(tau_inst);
-    *tau = NULL;
-    return;
+    /*  Use the DESTROY_TAU_VAR macro to free and NULLify all pointers.       */
+    DESTROY_TAU_VAR(tau->rho_km_vals)
+    DESTROY_TAU_VAR(tau->F_km_vals)
+    DESTROY_TAU_VAR(tau->phi_deg_vals)
+    DESTROY_TAU_VAR(tau->k_vals)
+    DESTROY_TAU_VAR(tau->rho_dot_kms_vals)
+    DESTROY_TAU_VAR(tau->B_deg_vals)
+    DESTROY_TAU_VAR(tau->D_km_vals)
+    DESTROY_TAU_VAR(tau->w_km_vals)
+    DESTROY_TAU_VAR(tau->t_oet_spm_vals)
+    DESTROY_TAU_VAR(tau->t_ret_spm_vals)
+    DESTROY_TAU_VAR(tau->t_set_spm_vals)
+    DESTROY_TAU_VAR(tau->rho_corr_pole_km_vals)
+    DESTROY_TAU_VAR(tau->rho_corr_timing_km_vals)
+    DESTROY_TAU_VAR(tau->tau_threshold_vals)
+    DESTROY_TAU_VAR(tau->phi_rl_deg_vals)
+    DESTROY_TAU_VAR(tau->rx_km_vals)
+    DESTROY_TAU_VAR(tau->ry_km_vals)
+    DESTROY_TAU_VAR(tau->rz_km_vals)
+    DESTROY_TAU_VAR(tau->T_in)
+    DESTROY_TAU_VAR(tau->T_out)
+    DESTROY_TAU_VAR(tau->T_fwd)
 }
-/*  End of rssringoccs_Destroy_Tau.                                           */
+/*  End of rssringoccs_Tau_Destroy_Members.                                   */

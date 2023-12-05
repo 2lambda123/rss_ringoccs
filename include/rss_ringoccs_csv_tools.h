@@ -114,14 +114,14 @@ typedef struct rssringoccs_TauCSV_Def {
 /*  Data structure that contains all of the data from all four CSV formats    *
  *  interpolated so that the values are a function of radius, not time.       */
 typedef struct rssringoccs_CSVData_Def {
-    double *B_rad_vals;
+    double *B_deg_vals;
     double *D_km_vals;
     double *f_sky_hz_vals;
     double *p_norm_vals;
     double *raw_tau_vals;
-    double *phase_rad_vals;
-    double *phi_rad_vals;
-    double *phi_rl_rad_vals;
+    double *phase_deg_vals;
+    double *phi_deg_vals;
+    double *phi_rl_deg_vals;
     double *raw_tau_threshold_vals;
     double *rho_corr_pole_km_vals;
     double *rho_corr_timing_km_vals;
@@ -173,35 +173,6 @@ rssringoccs_Extract_CSV_Data(const char *geo,
 extern void rssringoccs_Destroy_CSV_Members(rssringoccs_CSVData *csv);
 
 extern void rssringoccs_Destroy_CSV(rssringoccs_CSVData **csv);
-
-#define BUFFER_SIZE 1024
-static inline size_t rssringoccs_count_lines(FILE* file)
-{
-    char buffer[BUFFER_SIZE];
-    const size_t zero = (size_t)0;
-    size_t counter = zero;
-    size_t n, chars_read;
-
-    for(;;)
-    {
-        chars_read = fread(buffer, 1, BUFFER_SIZE, file);
-
-        if (ferror(file))
-            return zero;
-
-        for(n = 0; n < chars_read; n++)
-        {
-            if (buffer[n] == '\n')
-                counter++;
-        }
-
-        if (feof(file))
-            break;
-    }
-
-    return counter;
-}
-#undef BUFFER_SIZE
 
 #endif
 /*  End of include guard.                                                     */
